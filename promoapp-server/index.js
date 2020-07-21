@@ -15,7 +15,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use("/random", (req, res, next) => {
-  res.send("Welcome to the promoapp API");
+  res.status(200).json({
+    message: "Welcome to the promo app API.",
+  });
 });
 
 module.exports = app;
