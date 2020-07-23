@@ -28,9 +28,8 @@ router.post(
       .trim()
       .isLength({ min: 6 })
       .withMessage("Minimum length required is 6"),
-    check("role").not().isEmpty(),
   ],
-  userController.register
+  userController.signup
 );
 
 // POST : api/v1/user/login
