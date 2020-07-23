@@ -2,34 +2,13 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
+  username: String,
+  email: String,
+  password: String,
   avatar: String,
-  email: {
-    type: String,
-    required: "Email is required",
-    lowercase: true,
-    unique: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/],
-  },
-  name: {
-    type: String,
-    required: true,
-    minlength: [6, "Too short, min is 6 characters."],
-  },
-  username: {
-    type: String,
-    required: true,
-    minlength: [6, "Too short, min is 6 characters."],
-  },
-  password: {
-    type: String,
-    minlength: [4, "Too short, min is 4 characters."],
-    maxlength: [32, "Too long, max is 32 characters."],
-    required: "Password is required.",
-  },
   role: {
     type: String,
     enum: ["guest", "admin"],
-    required: true,
     default: "guest",
   },
   info: String,
@@ -40,6 +19,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", function (next) {
   const user = this;
+  user.username = user.email.split("@")[0];
   bcrypt.genSalt(10, function (err, salt) {
     if (err) return next(err);
 
