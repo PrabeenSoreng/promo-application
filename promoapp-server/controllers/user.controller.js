@@ -3,7 +3,14 @@ const User = require("../models/User.js");
 const catchAsync = require("../util/catchAsync.js");
 const { inputValidationErrors } = require("../util/catchError.js");
 
-exports.getCurrentUser = catchAsync(async (req, res, next) => {});
+exports.getCurrentUser = catchAsync(async (req, res, next) => {
+  const user = req.user;
+
+  if (!user) return res.sendStatus(422);
+  res.status(200).json({
+    user,
+  });
+});
 
 exports.signup = catchAsync(async (req, res, next) => {
   inputValidationErrors(req, res);
@@ -31,9 +38,15 @@ exports.login = catchAsync(async (req, res, next) => {
         delete user.__v;
         delete user.password;
         return res.status(200).json({
+          status: "success",
           message: "Login successful.",
           user,
         });
+      });
+    } else {
+      return res.status(422).json({
+        status: "failed",
+        message: "Invalid Email or password.",
       });
     }
   })(req, res, next);
@@ -46,4 +59,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // });
 });
 
-exports.logout = (req, res, next) => {};
+exports.logout = (req, res, next) => {
+  req.logout();
+  return res.json({ status: "Session destroyed!" });
+};

@@ -2,8 +2,12 @@ const express = require("express");
 const { check } = require("express-validator");
 const User = require("../models/User.js");
 const userController = require("../controllers/user.controller.js");
+const authController = require("../controllers/auth.controller.js");
 
 const router = express.Router();
+
+// POST : api/v1/user/logout
+router.get("/me", authController.onlyAuthUser, userController.getCurrentUser);
 
 // POST : api/v1/user/signup
 router.post(
@@ -48,6 +52,7 @@ router.post(
   userController.login
 );
 
+// POST : api/v1/user/logout
 router.post("/logout", userController.logout);
 
 module.exports = router;
