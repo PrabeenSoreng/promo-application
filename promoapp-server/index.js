@@ -7,6 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const userRoutes = require("./routes/user.router.js");
+const apiRoutes = require("./routes/api.router.js");
 
 require("./services/passport.js");
 
@@ -45,6 +46,7 @@ app.use("/random", (req, res, next) => {
   });
 });
 
+app.use("/api/v1/", apiRoutes);
 app.use("/api/v1/user", userRoutes);
 
 app.use((error, req, res, next) => {

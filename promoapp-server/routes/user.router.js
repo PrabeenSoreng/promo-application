@@ -6,7 +6,7 @@ const authController = require("../controllers/auth.controller.js");
 
 const router = express.Router();
 
-// POST : api/v1/user/logout
+// GET : api/v1/user/me
 router.get("/me", authController.onlyAuthUser, userController.getCurrentUser);
 
 // POST : api/v1/user/signup
