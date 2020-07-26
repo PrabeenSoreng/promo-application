@@ -8,6 +8,7 @@ const morgan = require("morgan");
 
 const userRoutes = require("./routes/user.router.js");
 const apiRoutes = require("./routes/api.router.js");
+const productRoutes = require("./routes/product.router.js");
 
 require("./services/passport.js");
 
@@ -48,13 +49,15 @@ app.use("/random", (req, res, next) => {
 
 app.use("/api/v1/", apiRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/product", productRoutes);
 
 app.use((error, req, res, next) => {
   console.log("ERROR", error);
   const statusCode = error.statusCode || 500;
+  const status = error.status;
   const message = error.message;
   const data = error.data;
-  res.status(statusCode).json({ message, data });
+  res.status(statusCode).json({ status, message, data });
 });
 
 module.exports = app;
