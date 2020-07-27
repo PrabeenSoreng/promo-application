@@ -11,6 +11,7 @@ const apiRoutes = require("./routes/api.router.js");
 const productRoutes = require("./routes/product.router.js");
 const productHeroRoutes = require("./routes/product-hero.router.js");
 const categoryRouters = require("./routes/category.router.js");
+const blogRouter = require("./routes/blog.router.js");
 
 require("./services/passport.js");
 
@@ -54,6 +55,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/product-hero", productHeroRoutes);
 app.use("/api/v1/category", categoryRouters);
+app.use("/api/v1/blog", blogRouter);
 
 app.use((error, req, res, next) => {
   console.log("ERROR", error);
