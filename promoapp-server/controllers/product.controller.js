@@ -5,7 +5,7 @@ const { inputValidationErrors, AppError } = require("../util/catchError.js");
 
 exports.getProducts = catchAsync(async (req, res, next) => {
   const products = await Product.find({ status: "published" })
-    .select("author -_id -password -products -email -role")
+    .populate("author -_id -password -products -email -role")
     .populate("category")
     .sort({ updatedAt: -1 });
   if (!products) return next(new AppError("No products found.", 404));
