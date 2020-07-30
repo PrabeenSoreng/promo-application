@@ -128,6 +128,7 @@
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { supportedFileType } from "@/helpers/validators";
 export default {
   data() {
     return {
