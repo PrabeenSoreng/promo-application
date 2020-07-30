@@ -84,10 +84,19 @@ export default {
       password: { required },
     },
   },
+  computed: {
+    isFormValid() {
+      return this.$v.$invalid;
+    },
+  },
   methods: {
     login() {
       this.$v.form.$touch();
-      this.$store.dispatch("auth/login", this.form);
+      if (!this.isFormValid) {
+        this.$store.dispatch("auth/login", this.form).then(() => {
+          this.$router.push("/");
+        });
+      }
     },
   },
 };

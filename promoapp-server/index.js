@@ -12,6 +12,7 @@ const productRoutes = require("./routes/product.router.js");
 const productHeroRoutes = require("./routes/product-hero.router.js");
 const categoryRouters = require("./routes/category.router.js");
 const blogRouter = require("./routes/blog.router.js");
+const mongoSession = require("./util/mongoSession.js");
 
 require("./services/passport.js");
 
@@ -21,11 +22,15 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
+const store = mongoSession.initSessionStore();
+
 const sess = {
+  name: process.env.SESSION_NAME,
   secret: process.env.SESSION_SECRET,
   cookie: { maxAge: 2 * 60 * 60 * 1000 },
   resave: false,
   saveUninitialized: true,
+  store,
 };
 
 // if (process.env.NODE_ENV === 'production') {
@@ -36,9 +41,9 @@ const sess = {
 //   sess.cookie.domain = process.env.DOMAIN // .yourdomain.com
 // }
 
+app.use(session(sess));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session(sess));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
