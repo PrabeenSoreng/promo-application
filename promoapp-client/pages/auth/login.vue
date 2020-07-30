@@ -87,6 +87,7 @@ export default {
   methods: {
     login() {
       this.$v.form.$touch();
+      this.$store.dispatch("auth/login", this.form);
     },
   },
 };
