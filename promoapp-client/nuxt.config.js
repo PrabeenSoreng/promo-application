@@ -34,7 +34,11 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [{ src: `~/plugins/filters` }, { src: `~/plugins/vuelidate` }],
+  plugins: [
+    { src: `~/plugins/filters` },
+    { src: `~/plugins/vuelidate` },
+    { src: `~/plugins/toasted`, ssr: false }
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components

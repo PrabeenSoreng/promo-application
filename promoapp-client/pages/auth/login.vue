@@ -22,11 +22,12 @@
                     autocomplete="email"
                   />
                   <div v-if="$v.form.email.$error" class="form-error">
-                    <span v-if="!$v.form.email.required" class="help is-danger">Email is required</span>
-                    <span
-                      v-if="!$v.form.email.email"
-                      class="help is-danger"
-                    >Email address is not valid</span>
+                    <span v-if="!$v.form.email.required" class="help is-danger"
+                      >Email is required</span
+                    >
+                    <span v-if="!$v.form.email.email" class="help is-danger"
+                      >Email address is not valid</span
+                    >
                   </div>
                 </div>
               </div>
@@ -44,7 +45,8 @@
                     <span
                       v-if="!$v.form.password.required"
                       class="help is-danger"
-                    >Password is required</span>
+                      >Password is required</span
+                    >
                   </div>
                 </div>
               </div>
@@ -53,7 +55,9 @@
                 @click.prevent="login"
                 :disabled="$v.form.$invalid"
                 class="button is-block is-info is-large is-fullwidth"
-              >Login</button>
+              >
+                Login
+              </button>
             </form>
           </div>
           <p class="has-text-grey">
@@ -74,31 +78,34 @@ export default {
     return {
       form: {
         email: null,
-        password: null,
-      },
+        password: null
+      }
     };
   },
   validations: {
     form: {
       email: { email, required },
-      password: { required },
-    },
+      password: { required }
+    }
   },
   computed: {
     isFormValid() {
       return this.$v.$invalid;
-    },
+    }
   },
   methods: {
     login() {
       this.$v.form.$touch();
       if (!this.isFormValid) {
-        this.$store.dispatch("auth/login", this.form).then(() => {
-          this.$router.push("/");
-        });
+        this.$store
+          .dispatch("auth/login", this.form)
+          .then(() => this.$router.push("/"))
+          .catch(() =>
+            this.$toasted.error("Wrong email or password", { duration: 3000 })
+          );
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
