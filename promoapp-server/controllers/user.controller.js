@@ -8,7 +8,8 @@ exports.getCurrentUser = catchAsync(async (req, res, next) => {
 
   if (!user) return res.sendStatus(422);
   res.status(200).json({
-    user,
+    status: "success",
+    data: user,
   });
 });
 
@@ -40,7 +41,7 @@ exports.login = catchAsync(async (req, res, next) => {
         return res.status(200).json({
           status: "success",
           message: "Login successful.",
-          user,
+          data: user,
         });
       });
     } else {

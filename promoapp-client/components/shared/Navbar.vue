@@ -34,21 +34,31 @@
         <div class="navbar-item">
           <div class="buttons">
             <!-- If Authenticated -->
-            <template v-if="false">
+            <template v-if="isAuth">
               <figure class="image avatar is-48x48 m-r-sm">
                 <img
                   class="is-rounded"
                   src="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
                 />
               </figure>
-              <div class="m-r-sm m-b-sm">Welcome User!</div>
+              <div class="m-r-sm m-b-sm">Welcome {{ user.username }}</div>
               <!-- If Admin -->
-              <button v-if="true" class="button is-link is-outlined" @click="() => {}">Instructor</button>
+              <button
+                v-if="isAdmin"
+                class="button is-link is-outlined"
+                @click="() => {}"
+              >
+                Instructor
+              </button>
               <a class="button is-primary" @click="() => {}">Logout</a>
             </template>
             <template v-else>
-              <nuxt-link to="/auth/register" class="button is-primary">Sign up</nuxt-link>
-              <nuxt-link to="/auth/login" class="button is-light">Log in</nuxt-link>
+              <nuxt-link to="/auth/register" class="button is-primary"
+                >Sign up</nuxt-link
+              >
+              <nuxt-link to="/auth/login" class="button is-light"
+                >Log in</nuxt-link
+              >
             </template>
           </div>
         </div>
@@ -57,6 +67,18 @@
   </nav>
 </template>
 
+<script>
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters({
+      user: "auth/authUser",
+      isAuth: "auth/isAuthenticated",
+      isAdmin: "auth/isAdmin"
+    })
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .brand-title {
