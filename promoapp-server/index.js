@@ -27,7 +27,12 @@ const store = mongoSession.initSessionStore();
 const sess = {
   name: process.env.SESSION_NAME,
   secret: process.env.SESSION_SECRET,
-  cookie: { maxAge: 2 * 60 * 60 * 1000 },
+  cookie: {
+    maxAge: 2 * 60 * 60 * 1000,
+    sameSite: false,
+    domain: "http://localhost:3000",
+    httpOnly: true,
+  },
   resave: false,
   saveUninitialized: true,
   store,

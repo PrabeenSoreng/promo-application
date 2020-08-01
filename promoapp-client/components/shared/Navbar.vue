@@ -50,7 +50,7 @@
               >
                 Instructor
               </button>
-              <a class="button is-primary" @click="() => {}">Logout</a>
+              <a class="button is-primary" @click="logout">Logout</a>
             </template>
             <template v-else>
               <nuxt-link to="/auth/register" class="button is-primary"
@@ -76,6 +76,13 @@ export default {
       isAuth: "auth/isAuthenticated",
       isAdmin: "auth/isAdmin"
     })
+  },
+  methods: {
+    logout() {
+      this.$store
+        .dispatch("auth/logout")
+        .then(() => this.$router.push("/auth/login"));
+    }
   }
 };
 </script>

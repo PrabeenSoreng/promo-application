@@ -27,6 +27,15 @@ export const actions = {
         commit("setAuthUser", null);
         return Promise.reject(error);
       });
+  },
+  logout({ commit, state }) {
+    return this.$axios
+      .$post("/api/v1/user/logout")
+      .then(() => {
+        commit("setAuthUser", null);
+        return true;
+      })
+      .catch(error => Promise.reject(error));
   }
 };
 
