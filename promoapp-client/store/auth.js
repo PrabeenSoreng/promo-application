@@ -5,6 +5,11 @@ export const state = () => {
 };
 
 export const actions = {
+  register({ commit, state }, registerData) {
+    return this.$axios
+      .$post("/api/v1/user/signup", registerData)
+      .catch(error => Promise.reject(error));
+  },
   login({ commit, state }, loginData) {
     return this.$axios
       .$post("/api/v1/user/login", loginData)

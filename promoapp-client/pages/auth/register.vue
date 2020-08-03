@@ -148,10 +148,22 @@ export default {
       passwordConfirmation: { required, sameAsPassword: sameAs("password") },
     },
   },
+  computed: {
+    isFormValid() {
+      return this.$v.$invalid;
+    },
+  },
   methods: {
     register() {
       this.$v.form.$touch();
-      console.log(this.form);
+      if (!this.isFormValid) {
+        this.$store
+          .dispatch("auth/register", this.form)
+          .then(() => this.$router.push("/auth/login"))
+          .catch(() => {
+            this.$toasted.error("Something went wrong", { duration: 3000 });
+          });
+      }
     },
   },
 };
