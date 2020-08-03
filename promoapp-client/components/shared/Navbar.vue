@@ -28,6 +28,8 @@
         <nuxt-link to="#" class="navbar-item">Blogs</nuxt-link>
         <nuxt-link to="#" class="navbar-item">About</nuxt-link>
         <nuxt-link to="#" class="navbar-item">Cv</nuxt-link>
+        <nuxt-link to="/instructor" class="navbar-item">Instructor</nuxt-link>
+        <nuxt-link to="/secret" class="navbar-item">Secret</nuxt-link>
       </div>
 
       <div class="navbar-end">
@@ -43,22 +45,12 @@
               </figure>
               <div class="m-r-sm m-b-sm">Welcome {{ user.username }}</div>
               <!-- If Admin -->
-              <button
-                v-if="isAdmin"
-                class="button is-link is-outlined"
-                @click="() => {}"
-              >
-                Instructor
-              </button>
+              <button v-if="isAdmin" class="button is-link is-outlined" @click="() => {}">Instructor</button>
               <a class="button is-primary" @click="logout">Logout</a>
             </template>
             <template v-else>
-              <nuxt-link to="/auth/register" class="button is-primary"
-                >Sign up</nuxt-link
-              >
-              <nuxt-link to="/auth/login" class="button is-light"
-                >Log in</nuxt-link
-              >
+              <nuxt-link to="/auth/register" class="button is-primary">Sign up</nuxt-link>
+              <nuxt-link to="/auth/login" class="button is-light">Log in</nuxt-link>
             </template>
           </div>
         </div>
@@ -74,16 +66,16 @@ export default {
     ...mapGetters({
       user: "auth/authUser",
       isAuth: "auth/isAuthenticated",
-      isAdmin: "auth/isAdmin"
-    })
+      isAdmin: "auth/isAdmin",
+    }),
   },
   methods: {
     logout() {
       this.$store
         .dispatch("auth/logout")
         .then(() => this.$router.push("/auth/login"));
-    }
-  }
+    },
+  },
 };
 </script>
 
