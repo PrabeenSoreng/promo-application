@@ -18,7 +18,12 @@ require("./services/passport.js");
 
 const app = express();
 
-app.use(cors());
+const corsConfig = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+
+app.use(cors(corsConfig));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
@@ -30,7 +35,6 @@ const sess = {
   cookie: {
     maxAge: 2 * 60 * 60 * 1000,
     sameSite: false,
-    domain: "http://localhost:3000",
     httpOnly: true,
   },
   resave: false,
