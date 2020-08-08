@@ -2,7 +2,9 @@
   <nuxt />
 </template>
 <script>
-export default {};
+export default {
+  middleware: "admin",
+};
 </script>
 <style lang="scss">
 html {

@@ -1,6 +1,6 @@
 <template>
   <div class="instructor-page">
-    <InstructorHeader exitLink="/" />
+    <InstructorHeader title="Instructor Page" exitLink="/" />
     <div class="centered">
       <div class="columns">
         <!-- Go to /instructor/courses -->
@@ -22,7 +22,6 @@
 <script>
 import InstructorHeader from "~/components/shared/Header";
 export default {
-  middleware: "admin",
   layout: "instructor",
   components: {
     InstructorHeader,

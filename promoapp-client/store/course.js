@@ -9,7 +9,7 @@ export const actions = {
     return this.$axios.$get("/api/v1/product").then(courses => {
       commit(
         "setItems",
-        { resource: "course", items: courses },
+        { resource: "course", items: courses.data },
         { root: true }
       );
       return state.items;

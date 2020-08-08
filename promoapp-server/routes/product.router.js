@@ -25,6 +25,14 @@ router
     productController.createProduct
   );
 
+// GET : api/v1/product/user-products
+router.get(
+  "/user-products",
+  authController.onlyAuthUser,
+  authController.onlyAdmin,
+  productController.getInstructorProducts
+);
+
 // GET : api/v1/product/:id
 // PATCH : api/v1/product/:id
 router
@@ -38,13 +46,5 @@ router
 
 // GET : api/v1/product/s/:slug
 router.get("/s/:slug", productController.getProductBySlug);
-
-// GET : api/v1/product/user-products
-router.get(
-  "/user-products",
-  authController.onlyAuthUser,
-  authController.onlyAdmin,
-  productController.getInstructorProducts
-);
 
 module.exports = router;

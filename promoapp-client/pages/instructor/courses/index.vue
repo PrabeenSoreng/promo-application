@@ -57,6 +57,14 @@ export default {
   components: {
     InstructorHeader,
   },
+  computed: {
+    instructorCourses() {
+      return this.$store.state.instructor.course.courses;
+    },
+  },
+  fetch({ store }) {
+    return store.dispatch("instructor/course/fetchInstructorCourses");
+  },
 };
 </script>
 <style scoped lang="scss">
