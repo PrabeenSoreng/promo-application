@@ -3,7 +3,7 @@
     <InstructorHeader title="Create your courses">
       <template #actionMenu>
         <div class="full-page-takeover-header-button">
-          <nuxt-link to="#" class="button is-medium is-light">New Course</nuxt-link>
+          <nuxt-link to="/instructor/course/create" class="button is-medium is-light">New Course</nuxt-link>
           <nuxt-link to="/" class="button is-danger is-medium is-inverted is-outlined">Student</nuxt-link>
         </div>
       </template>
@@ -14,7 +14,7 @@
           <div class="column is-8 is-offset-2">
             <h1 class="courses-page-title">Your Courses</h1>
             <!-- Iterate Courses -->
-            <div class="tile is-ancestor">
+            <div v-for="course in instructorCourses" :key="course._id" class="tile is-ancestor">
               <div class="tile is-parent is-12">
                 <!-- Navigate to course manage page -->
                 <nuxt-link :to="'#'" class="tile tile-overlay-container is-child box">
@@ -24,20 +24,18 @@
                   <div class="columns">
                     <div class="column is-narrow">
                       <figure class="image is-4by2 is-128x128">
-                        <img :src="'https://i.udemycdn.com/course/750x422/2381802_d90c_3.jpg'" />
+                        <img :src="course.image" />
                       </figure>
                     </div>
                     <div class="column">
-                      <p class="title">Dart and Flutter From Zero to Hero - Practical Dev Bootcamp</p>
-                      <p
-                        class="subtitle"
-                      >Build real mobile Application for Android and iOS. Learn Dart Framework and discover amazing features of Flutter.</p>
-                      <span class="tag" :class="'is-success'">Published</span>
+                      <p class="title">{{course.title}}</p>
+                      <p class="subtitle">{{course.subtitle}}</p>
+                      <span class="tag" :class="'is-success'">{{course.status}}</span>
                     </div>
                     <div class="column is-narrow flex-centered">
                       <div class="price-title">
-                        <!-- {{course.price || 0}} $ -->
-                        178.99 $
+                        {{course.price || 0}} $
+                        <!-- 178.99 $ -->
                       </div>
                     </div>
                   </div>
