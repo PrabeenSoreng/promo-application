@@ -1,7 +1,7 @@
 <template>
   <div class="full-page-takeover-window">
     <div class="full-page-takeover-page">
-      <InstructorHeader :title="`Step 1 of 2`" exitLink="/instructor/courses" />
+      <InstructorHeader :title="`Step ${activeStep} of 2`" exitLink="/instructor/courses" />
       <div class="full-page-takeover-header-bottom-progress">
         <div :style="{width: progress}" class="full-page-takeover-header-bottom-progress-highlight"></div>
       </div>
