@@ -14,7 +14,7 @@
           <!-- <CourseCreateStep2 v-if="activeStep === 2" /> -->
           <!-- STEP 2 END -->
           <keep-alive>
-            <component :is="activeComponent" @stepUpdated="mergeFormData" />
+            <component ref="activeComponent" :is="activeComponent" @stepUpdated="mergeFormData" />
           </keep-alive>
         </div>
         <div class="full-page-footer-row">
@@ -36,6 +36,7 @@
                 <button
                   v-else
                   @click="() => {}"
+                  :disabled="!canProceed"
                   class="button is-success is-large float-right"
                 >Confirm</button>
               </div>
@@ -91,13 +92,17 @@ export default {
   methods: {
     nextStep() {
       this.activeStep++;
+      this.$nextTick(() => {
+        this.canProceed = this.$refs.activeComponent.isValid;
+      });
     },
     previousStep() {
       this.activeStep--;
+      this.canProceed = true;
     },
-    mergeFormData(step) {
-      this.form = { ...this.form, ...step.data };
-      this.canProceed = step.isValid;
+    mergeFormData({ data, isValid }) {
+      this.form = { ...this.form, ...data };
+      this.canProceed = isValid;
     },
   },
 };
