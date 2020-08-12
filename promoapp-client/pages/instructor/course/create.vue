@@ -35,7 +35,7 @@
                 >Continue</button>
                 <button
                   v-else
-                  @click="() => {}"
+                  @click="submitForm"
                   :disabled="!canProceed"
                   class="button is-success is-large float-right"
                 >Confirm</button>
@@ -90,6 +90,16 @@ export default {
     return store.dispatch("category/fetchCategories");
   },
   methods: {
+    submitForm() {
+      this.$store
+        .dispatch("instructor/course/createCourse", this.form)
+        .then(() => {
+          this.$router.push("/instructor/courses");
+        })
+        .catch(() =>
+          this.$toasted.error("Something went wrong...", { duration: 3000 })
+        );
+    },
     nextStep() {
       this.activeStep++;
       this.$nextTick(() => {

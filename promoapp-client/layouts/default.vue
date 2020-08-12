@@ -1,16 +1,16 @@
 <template>
   <div>
-    <Navbar />
+    <NavigationBar />
     <Nuxt />
   </div>
 </template>
 
 <script>
-import Navbar from "~/components/shared/Navbar";
+import NavigationBar from "~/components/shared/Navbar";
 export default {
   components: {
-    Navbar
-  }
+    NavigationBar,
+  },
 };
 </script>
 

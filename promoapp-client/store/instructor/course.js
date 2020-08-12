@@ -13,6 +13,9 @@ export const actions = {
         return state.courses;
       })
       .catch(error => Promise.reject(error));
+  },
+  createCourse({ commit, state }, newCourse) {
+    return this.$axios.$post("/api/v1/product", newCourse);
   }
 };
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const productSchema = new mongoose.Schema({
   slug: {
@@ -40,6 +41,11 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+});
+
+productSchema.pre("save", function (next) {
+  this.slug = slugify(this.title);
+  next();
 });
 
 module.exports = mongoose.model("Product", productSchema);

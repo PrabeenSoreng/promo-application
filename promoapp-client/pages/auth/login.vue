@@ -97,7 +97,6 @@ export default {
         this.$store
           .dispatch("auth/login", this.form)
           .then(() => {
-            console.log(document.cookie);
             this.$router.push("/");
           })
           .catch(() =>
