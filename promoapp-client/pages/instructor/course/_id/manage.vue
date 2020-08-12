@@ -17,39 +17,40 @@
               <ul class="menu-list">
                 <li>
                   <!-- display TargetStudents -->
-                  <a @click.prevent="() => {}" :class="'active'">Target Your Students</a>
+                  <a
+                    @click.prevent="navigateTo(1)"
+                    :class="activeComponentClass(1)"
+                  >Target Your Students</a>
                 </li>
                 <li>
                   <!-- display LandingPage -->
-                  <a @click.prevent="() => {}">Course Landing Page</a>
+                  <a
+                    @click.prevent="navigateTo(2)"
+                    :class="activeComponentClass(2)"
+                  >Course Landing Page</a>
                 </li>
               </ul>
               <p class="menu-label">Course Managment</p>
               <ul class="menu-list">
                 <li>
                   <!-- display Price -->
-                  <a @click.prevent="() => {}">Price</a>
+                  <a @click.prevent="navigateTo(3)" :class="activeComponentClass(3)">Price</a>
                 </li>
                 <li>
                   <!-- display Status -->
-                  <a @click.prevent="() => {}">Status</a>
+                  <a @click.prevent="navigateTo(4)" :class="activeComponentClass(4)">Status</a>
                 </li>
               </ul>
             </aside>
           </div>
           <div class="column">
-            <!-- TargetStudents -->
-            <TargetStudents />
-            <!-- TargetStudents End -->
-            <!-- LandingPage -->
-            <LandingPage />
-            <!-- LandingPage End -->
-            <!-- Price -->
-            <Price />
-            <!-- Price End -->
-            <!-- Status -->
-            <Status />
-            <!-- Status End -->
+            <!-- <TargetStudents /> -->
+            <!-- <LandingPage /> -->
+            <!-- <Price /> -->
+            <!-- <Status /> -->
+            <keep-alive>
+              <component :is="activeComponent" />
+            </keep-alive>
           </div>
         </div>
       </div>
@@ -65,7 +66,26 @@ import Price from "~/components/instructor/Price";
 import Status from "~/components/instructor/Status";
 export default {
   layout: "instructor",
-  components: { InstructorHeader },
+  components: { InstructorHeader, TargetStudents, LandingPage, Price, Status },
+  data() {
+    return {
+      activeStep: 1,
+      steps: ["TargetStudents", "LandingPage", "Price", "Status"],
+    };
+  },
+  computed: {
+    activeComponent() {
+      return this.steps[this.activeStep - 1];
+    },
+  },
+  methods: {
+    navigateTo(step) {
+      this.activeStep = step;
+    },
+    activeComponentClass(step) {
+      return this.activeStep === step ? "is-active" : "";
+    },
+  },
 };
 </script>
 
@@ -90,6 +110,7 @@ export default {
           margin-top: 10px;
           > a {
             &.is-active {
+              border-left: 3px solid #58529f;
               background-color: transparent;
               color: inherit;
             }
