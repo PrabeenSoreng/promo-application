@@ -1,6 +1,7 @@
 export const state = () => {
   return {
-    courses: []
+    courses: [],
+    course: {}
   };
 };
 
@@ -14,6 +15,15 @@ export const actions = {
       })
       .catch(error => Promise.reject(error));
   },
+  fetchCourseById({ commit, state }, productId) {
+    return this.$axios
+      .$get(`/api/v1/product/${productId}`)
+      .then(course => {
+        commit("setCourse", course.data);
+        return state.course;
+      })
+      .catch(error => Promise.reject(error));
+  },
   createCourse({ commit, state }, newCourse) {
     return this.$axios.$post("/api/v1/product", newCourse);
   }
@@ -22,6 +32,9 @@ export const actions = {
 export const mutations = {
   setCourses(state, courses) {
     state.courses = courses;
+  },
+  setCourse(state, course) {
+    state.course = course;
   }
 };
 

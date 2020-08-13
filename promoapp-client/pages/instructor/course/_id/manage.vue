@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import InstructorHeader from "~/components/shared/Header";
 import TargetStudents from "~/components/instructor/TargetStudents";
 import LandingPage from "~/components/instructor/LandingPage";
@@ -73,6 +74,14 @@ export default {
     return {
       steps: ["TargetStudents", "LandingPage", "Price", "Status"],
     };
+  },
+  fetch({ store, params }) {
+    return store.dispatch("instructor/course/fetchCourseById", params.id);
+  },
+  computed: {
+    ...mapState({
+      course: (state) => state.instructor.course.course,
+    }),
   },
 };
 </script>
