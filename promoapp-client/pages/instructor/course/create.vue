@@ -21,7 +21,7 @@
           <div class="container">
             <div class="full-page-footer-col">
               <div v-if="!isFirstStep">
-                <a @click.prevent="previousStep" class="button is-large">Previous</a>
+                <a @click.prevent="_previousStep" class="button is-large">Previous</a>
               </div>
               <div v-else class="empty-container"></div>
             </div>
@@ -29,7 +29,7 @@
               <div>
                 <button
                   v-if="!isLastStep"
-                  @click.prevent="nextStep"
+                  @click.prevent="_nextStep"
                   :disabled="!canProceed"
                   class="button is-large float-right"
                 >Continue</button>
@@ -52,12 +52,13 @@
 import InstructorHeader from "~/components/shared/Header";
 import CourseCreateStep1 from "~/components/instructor/CourseCreateStep1";
 import CourseCreateStep2 from "~/components/instructor/CourseCreateStep2";
+import MultiComponentMixin from "~/mixins/MultiComponentMixin";
 export default {
   layout: "instructor",
   components: { InstructorHeader, CourseCreateStep1, CourseCreateStep2 },
+  mixins: [MultiComponentMixin],
   data() {
     return {
-      activeStep: 1,
       steps: ["CourseCreateStep1", "CourseCreateStep2"],
       canProceed: false,
       form: {
@@ -65,26 +66,6 @@ export default {
         category: "",
       },
     };
-  },
-  computed: {
-    stepsLength() {
-      return this.steps.length;
-    },
-    isLastStep() {
-      return this.activeStep === this.stepsLength;
-    },
-    isFirstStep() {
-      return this.activeStep === 1;
-    },
-    progress() {
-      return `${(100 / this.stepsLength) * this.activeStep}%`;
-    },
-    activeComponent() {
-      return this.steps[this.activeStep - 1];
-    },
-    categories() {
-      return this.$store.state.category.items;
-    },
   },
   fetch({ store }) {
     return store.dispatch("category/fetchCategories");
@@ -100,14 +81,14 @@ export default {
           this.$toasted.error("Something went wrong...", { duration: 3000 })
         );
     },
-    nextStep() {
-      this.activeStep++;
+    _nextStep() {
+      this.nextStep();
       this.$nextTick(() => {
         this.canProceed = this.$refs.activeComponent.isValid;
       });
     },
-    previousStep() {
-      this.activeStep--;
+    _previousStep() {
+      this.previousStep();
       this.canProceed = true;
     },
     mergeFormData({ data, isValid }) {
