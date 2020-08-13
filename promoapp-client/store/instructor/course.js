@@ -26,6 +26,9 @@ export const actions = {
   },
   createCourse({ commit, state }, newCourse) {
     return this.$axios.$post("/api/v1/product", newCourse);
+  },
+  updateLine({ commit }, { index, value, field }) {
+    commit("setLineValue", { index, value, field });
   }
 };
 
@@ -35,6 +38,15 @@ export const mutations = {
   },
   setCourse(state, course) {
     state.course = course;
+  },
+  addLine(state, field) {
+    state.course[field].push({ value: "" });
+  },
+  removeLine(state, { field, index }) {
+    state.course[field].splice(index, 1);
+  },
+  setLineValue(state, { index, value, field }) {
+    state.course[field][index].value = value;
   }
 };
 

@@ -49,7 +49,7 @@
             <!-- <Price /> -->
             <!-- <Status /> -->
             <keep-alive>
-              <component :is="activeComponent" />
+              <component :is="activeComponent" :course="course" />
             </keep-alive>
           </div>
         </div>
