@@ -29,6 +29,9 @@ export const actions = {
   },
   updateLine({ commit }, { index, value, field }) {
     commit("setLineValue", { index, value, field });
+  },
+  updateCourseValue({ commit }, { value, field }) {
+    commit("setCourseValue", { field, value });
   }
 };
 
@@ -38,6 +41,9 @@ export const mutations = {
   },
   setCourse(state, course) {
     state.course = course;
+  },
+  setCourseValue(state, { value, field }) {
+    state.course[field] = value;
   },
   addLine(state, field) {
     state.course[field].push({ value: "" });

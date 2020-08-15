@@ -49,7 +49,11 @@
             <!-- <Price /> -->
             <!-- <Status /> -->
             <keep-alive>
-              <component :is="activeComponent" :course="course" />
+              <component
+                @courseValueUpdated="handleCourseUpdate"
+                :is="activeComponent"
+                :course="course"
+              />
             </keep-alive>
           </div>
         </div>
@@ -82,6 +86,14 @@ export default {
     ...mapState({
       course: (state) => state.instructor.course.course,
     }),
+  },
+  methods: {
+    handleCourseUpdate({ value, field }) {
+      this.$store.dispatch("instructor/course/updateCourseValue", {
+        field,
+        value,
+      });
+    },
   },
 };
 </script>
