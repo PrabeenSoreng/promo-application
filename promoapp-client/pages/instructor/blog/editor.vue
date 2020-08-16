@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Header title="Write your Blogs" exitLink="/instructor/blogs" />
+    <InstructorHeader title="Write your Blogs" exitLink="/instructor/blogs" />
     <div class="blog-editor-container">
       <div class="container">
-        Editor
+        <Editor />
         <!-- Editor Component here! -->
       </div>
     </div>
@@ -11,12 +11,14 @@
 </template>
 
 <script>
-import Header from "~/components/shared/Header";
+import InstructorHeader from "~/components/shared/Header";
+import Editor from "~/components/editor";
 export default {
   layout: "instructor",
   components: {
-    Header,
-  },
+    InstructorHeader,
+    Editor
+  }
 };
 </script>
 <style lang="scss">

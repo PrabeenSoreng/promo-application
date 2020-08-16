@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="Manage your Blogs" exitLink="/" />
+    <InstructorHeader title="Manage your Blogs" exitLink="/" />
     <div class="instructor-blogs">
       <div class="container">
         <div class="section">
@@ -50,10 +50,10 @@
   </div>
 </template>
 <script>
-import Header from "~/components/shared/Header";
+import InstructorHeader from "~/components/shared/Header";
 export default {
   layout: "instructor",
-  components: { Header },
+  components: { InstructorHeader },
 };
 </script>
 
