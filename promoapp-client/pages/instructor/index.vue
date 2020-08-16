@@ -8,7 +8,7 @@
           <div>Courses</div>
         </div>
         <!-- Go to /instructor/blogs -->
-        <div class="box" @click="() => {}">
+        <div class="box" @click="() => $router.push('/instructor/blogs')">
           <div>Blogs</div>
         </div>
         <!-- Go to /instructor/heroes -->
