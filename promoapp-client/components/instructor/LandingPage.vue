@@ -48,7 +48,6 @@
               :value="course.category._id"
               @change="($event) => emitCourseValue($event, 'category')"
             >
-              <!-- <option value="default">Select Category</option> -->
               <option
                 v-for="category in categories"
                 :key="category._id"
@@ -115,6 +114,9 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {};
+  },
   computed: {
     categories() {
       return this.$store.state.category.items;
@@ -122,9 +124,8 @@ export default {
   },
   methods: {
     emitCourseValue(e, field) {
-      const value = e.target.value;
-      if (field === "category") return this.emitCategory(value, field);
-      this.$emit("courseValueUpdated", { value, field });
+      if (field === "category") return this.emitCategory(e.target.value, field);
+      return this.$emit("courseValueUpdated", { value: e.target.value, field });
     },
     emitCategory(categoryId, field) {
       const foundCategory = this.categories.find((c) => c._id === categoryId);

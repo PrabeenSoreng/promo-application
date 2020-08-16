@@ -3,7 +3,11 @@
     <InstructorHeader title="Some very nice course name" exitLink="/instructor/courses">
       <template #actionMenu>
         <div class="full-page-takeover-header-button">
-          <button @click="() => {}" class="button is-primary is-inverted is-medium is-outlined">Save</button>
+          <button
+            @click.prevent="updateCourse"
+            :disabled="!canUpdateCourse"
+            class="button is-primary is-inverted is-medium is-outlined"
+          >Save</button>
         </div>
       </template>
     </InstructorHeader>
@@ -86,6 +90,7 @@ export default {
   computed: {
     ...mapState({
       course: (state) => state.instructor.course.course,
+      canUpdateCourse: (state) => state.instructor.course.canUpdateCourse,
     }),
   },
   methods: {
@@ -94,6 +99,18 @@ export default {
         field,
         value,
       });
+    },
+    updateCourse() {
+      this.$store
+        .dispatch("instructor/course/updateCourse")
+        .then(() => {
+          this.$toasted.success("Course has been successfully updated!", {
+            duration: 3000,
+          });
+        })
+        .catch((error) =>
+          this.$toasted.error("Problem updating course!", { duration: 3000 })
+        );
     },
   },
 };

@@ -1,7 +1,8 @@
 export const state = () => {
   return {
     courses: [],
-    course: {}
+    course: {},
+    canUpdateCourse: false
   };
 };
 
@@ -29,9 +30,22 @@ export const actions = {
   },
   updateLine({ commit }, { index, value, field }) {
     commit("setLineValue", { index, value, field });
+    commit("setCanUpdateCourse", true);
   },
   updateCourseValue({ commit }, { value, field }) {
     commit("setCourseValue", { field, value });
+    commit("setCanUpdateCourse", true);
+  },
+  updateCourse({ commit, state }) {
+    const course = state.course;
+    return this.$axios
+      .$patch(`/api/v1/product/${course._id}`, course)
+      .then(course => {
+        commit("setCourse", state.course);
+        commit("setCanUpdateCourse", false);
+        return state.course;
+      })
+      .catch(error => Promise.reject(error));
   }
 };
 
@@ -44,6 +58,9 @@ export const mutations = {
   },
   setCourseValue(state, { value, field }) {
     state.course[field] = value;
+  },
+  setCanUpdateCourse(state, canUpdate) {
+    state.canUpdateCourse = canUpdate;
   },
   addLine(state, field) {
     state.course[field].push({ value: "" });
