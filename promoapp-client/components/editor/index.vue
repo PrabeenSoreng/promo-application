@@ -1,5 +1,6 @@
 <template>
   <div class="editor editor-squished">
+    <BubbleMenu :editor="editor" />
     <EditorContent class="editor__content" :editor="editor" />
   </div>
 </template>
@@ -7,9 +8,11 @@
 <script>
 import { Editor, EditorContent } from "tiptap";
 import { Heading } from "tiptap-extensions";
+import BubbleMenu from "~/components/editor/BubbleMenu";
 export default {
   components: {
-    EditorContent
+    EditorContent,
+    BubbleMenu
   },
   data() {
     return {
