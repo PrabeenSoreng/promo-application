@@ -24,7 +24,13 @@ export default {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [
+      {
+        // <script src="https://kit.fontawesome.com/7dec2fb76b.js" crossorigin="anonymous"></script>
+        src: "https://kit.fontawesome.com/7dec2fb76b.js"
+      }
+    ]
   },
   /*
    ** Global CSS
