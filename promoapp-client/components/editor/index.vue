@@ -1,6 +1,10 @@
 <template>
   <div class="editor editor-squished">
-    <BasicMenu :editor="editor" />
+    <BasicMenu :editor="editor">
+      <template #saveButton>
+        <button @click="emitUpdate" class="button is-success button-save">Save</button>
+      </template>
+    </BasicMenu>
     <BubbleMenu :editor="editor" />
     <EditorContent class="editor__content" :editor="editor" />
   </div>
@@ -80,5 +84,34 @@ export default {
   beforeDestroy() {
     this.editor && this.editor.destroy();
   },
+  methods: {
+    emitUpdate() {
+      const html = this.editor.getHTML();
+      const title = this.getNodeValueByName("title");
+      const subtitle = this.getNodeValueByName("subtitle");
+
+      this.$emit("editorUpdated", { content: html, title, subtitle });
+    },
+    getNodeValueByName(name) {
+      const docContent = this.editor.state.doc.content;
+      const nodes = docContent.content;
+      const node = nodes.find((n) => n.type.name === name);
+      if (node) return node.textContent;
+      return "";
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.button-save {
+  float: right;
+  background-color: #23d160;
+  &:hover {
+    background-color: #2bc76c;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+</style>

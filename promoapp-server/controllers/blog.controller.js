@@ -113,7 +113,7 @@ exports.updateBlogs = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createBlog = catchAsync((req, res, next) => {
+exports.createBlog = (req, res, next) => {
   const lockId = req.query.lockId;
 
   if (!lock.isBusy(lockId)) {
@@ -142,7 +142,7 @@ exports.createBlog = catchAsync((req, res, next) => {
   } else {
     return res.status(422).send({ message: "Blog is getting saved!" });
   }
-});
+};
 
 exports.deleteBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.findByIdAndDelete(req.params.id);
