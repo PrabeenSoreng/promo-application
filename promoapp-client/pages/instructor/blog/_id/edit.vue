@@ -47,7 +47,7 @@
     </InstructorHeader>
     <div class="blog-editor-container">
       <div class="container">
-        <editor />
+        <editor @editorMounted="initBlogContent" />
       </div>
     </div>
   </div>
@@ -56,12 +56,33 @@
 import Editor from "~/components/editor";
 import InstructorHeader from "~/components/shared/Header";
 import Modal from "~/components/shared/Modal";
+import { mapState } from "vuex";
 export default {
   layout: "instructor",
   components: {
     Editor,
     InstructorHeader,
     Modal,
+  },
+  computed: {
+    ...mapState({
+      blog: ({ instructor }) => instructor.blog.blog,
+    }),
+  },
+  async fetch({ params, store }) {
+    await store.dispatch("instructor/blog/fetchBlogById", params.id);
+  },
+  methods: {
+    // initBlogContent(editor) {
+    //   if (this.blog && this.blog.content) {
+    //     editor.setContent(this.blog.content);
+    //   }
+    // },
+    initBlogContent(initContent) {
+      if (this.blog && this.blog.content) {
+        initContent(this.blog.content);
+      }
+    },
   },
 };
 </script>

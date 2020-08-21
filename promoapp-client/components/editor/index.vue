@@ -80,6 +80,9 @@ export default {
         }),
       ],
     });
+
+    // this.$emit("editorMounted", this.editor);
+    this.$emit("editorMounted", this.setInitialContent);
   },
   beforeDestroy() {
     this.editor && this.editor.destroy();
@@ -98,6 +101,9 @@ export default {
       const node = nodes.find((n) => n.type.name === name);
       if (node) return node.textContent;
       return "";
+    },
+    setInitialContent(content) {
+      this.editor.setContent(content);
     },
   },
 };

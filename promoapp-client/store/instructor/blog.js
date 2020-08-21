@@ -1,4 +1,8 @@
-export const state = () => ({});
+export const state = () => {
+  return {
+    blog: {}
+  };
+};
 
 export const actions = {
   createBlog(_, blogData) {
@@ -6,7 +10,20 @@ export const actions = {
       .$post("/api/v1/blog", blogData)
       .then(blog => blog)
       .catch(error => Promise.reject(error));
+  },
+  fetchBlogById({ commit, state }, blogId) {
+    return this.$axios
+      .$get(`/api/v1/blog/${blogId}`)
+      .then(blog => {
+        commit("setBlog", blog.data);
+        return state.blog;
+      })
+      .catch(error => Promise.reject(error));
   }
 };
 
-export const mutations = {};
+export const mutations = {
+  setBlog(state, blog) {
+    state.blog = blog;
+  }
+};
