@@ -92,7 +92,7 @@ export default {
       const html = this.editor.getHTML();
       const title = this.getNodeValueByName("title");
       const subtitle = this.getNodeValueByName("subtitle");
-
+      // console.log({ content: html, title, subtitle });
       this.$emit("editorUpdated", { content: html, title, subtitle });
     },
     getNodeValueByName(name) {

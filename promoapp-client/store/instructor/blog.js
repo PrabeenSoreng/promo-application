@@ -19,6 +19,15 @@ export const actions = {
         return state.blog;
       })
       .catch(error => Promise.reject(error));
+  },
+  updateBlog({ commit, state }, { data, id }) {
+    return this.$axios
+      .$patch(`/api/v1/blog/${id}`, data)
+      .then(blog => {
+        commit("setBlog", blog.data);
+        return state.blog;
+      })
+      .catch(error => Promise.reject(error));
   }
 };
 

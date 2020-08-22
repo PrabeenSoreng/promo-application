@@ -47,7 +47,7 @@
     </InstructorHeader>
     <div class="blog-editor-container">
       <div class="container">
-        <editor @editorMounted="initBlogContent" />
+        <editor @editorMounted="initBlogContent" @editorUpdated="updateBlog" />
       </div>
     </div>
   </div>
@@ -73,15 +73,25 @@ export default {
     await store.dispatch("instructor/blog/fetchBlogById", params.id);
   },
   methods: {
-    // initBlogContent(editor) {
-    //   if (this.blog && this.blog.content) {
-    //     editor.setContent(this.blog.content);
-    //   }
-    // },
     initBlogContent(initContent) {
       if (this.blog && this.blog.content) {
         initContent(this.blog.content);
       }
+    },
+    updateBlog(blogData) {
+      this.$store
+        .dispatch("instructor/blog/updateBlog", {
+          data: blogData,
+          id: this.blog._id,
+        })
+        .then((_) =>
+          this.$toasted.success("Blog updated successfully!", {
+            duration: 2000,
+          })
+        )
+        .catch((error) =>
+          this.$toasted.error("Blog update error!", { duration: 2000 })
+        );
     },
   },
 };
