@@ -54,6 +54,9 @@ import InstructorHeader from "~/components/shared/Header";
 export default {
   layout: "instructor",
   components: { InstructorHeader },
+  async fetch({ store }) {
+    await store.dispatch("instructor/blog/fetchUserBlogs");
+  },
 };
 </script>
 
