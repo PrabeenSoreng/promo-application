@@ -2,7 +2,13 @@
   <div class="editor editor-squished">
     <BasicMenu :editor="editor">
       <template #saveButton>
-        <button @click="emitUpdate" class="button is-success button-save">Save</button>
+        <button
+          @click="emitUpdate"
+          :disabled="isSaving"
+          class="button is-success button-save"
+        >
+          Save
+        </button>
       </template>
     </BasicMenu>
     <BubbleMenu :editor="editor" />
@@ -28,7 +34,7 @@ import {
   BulletList,
   ListItem,
   CodeBlockHighlight,
-  Placeholder,
+  Placeholder
 } from "tiptap-extensions";
 import javascript from "highlight.js/lib/languages/javascript";
 import css from "highlight.js/lib/languages/css";
@@ -39,11 +45,17 @@ export default {
   components: {
     EditorContent,
     BubbleMenu,
-    BasicMenu,
+    BasicMenu
+  },
+  props: {
+    isSaving: {
+      default: false,
+      required: false
+    }
   },
   data() {
     return {
-      editor: null,
+      editor: null
     };
   },
   mounted() {
@@ -54,11 +66,11 @@ export default {
         new Subtitle(),
         new Placeholder({
           showOnlyCurrent: false,
-          emptyNodeText: (node) => {
+          emptyNodeText: node => {
             if (node.type.name === "title") return "Inspirational Title";
             if (node.type.name === "subtitle") return "Some catchy subtitle";
             return "Write your story...";
-          },
+          }
         }),
         new Heading({ levels: [1, 2, 3] }),
         new Bold(),
@@ -75,10 +87,10 @@ export default {
         new CodeBlockHighlight({
           languages: {
             javascript,
-            css,
-          },
-        }),
-      ],
+            css
+          }
+        })
+      ]
     });
 
     // this.$emit("editorMounted", this.editor);
@@ -89,23 +101,26 @@ export default {
   },
   methods: {
     emitUpdate() {
+      const content = this.getContent();
+      this.$emit("editorUpdated", content);
+    },
+    getContent() {
       const html = this.editor.getHTML();
       const title = this.getNodeValueByName("title");
       const subtitle = this.getNodeValueByName("subtitle");
-      // console.log({ content: html, title, subtitle });
-      this.$emit("editorUpdated", { content: html, title, subtitle });
+      return { content: html, title, subtitle };
     },
     getNodeValueByName(name) {
       const docContent = this.editor.state.doc.content;
       const nodes = docContent.content;
-      const node = nodes.find((n) => n.type.name === name);
+      const node = nodes.find(n => n.type.name === name);
       if (node) return node.textContent;
       return "";
     },
     setInitialContent(content) {
       this.editor.setContent(content);
-    },
-  },
+    }
+  }
 };
 </script>
 
