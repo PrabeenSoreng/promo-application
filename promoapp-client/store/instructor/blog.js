@@ -3,7 +3,7 @@ function separateBlogs(blogs) {
   const drafts = [];
 
   blogs.forEach(blog => {
-    blogs.status === "active" ? drafts.push(blog) : published.push(blog);
+    blog.status === "active" ? drafts.push(blog) : published.push(blog);
   });
   return { published, drafts };
 }
@@ -38,8 +38,6 @@ export const actions = {
   fetchUserBlogs({ commit, state }) {
     return this.$axios.$get(`/api/v1/blog/me`).then(({ data }) => {
       const { published, drafts } = separateBlogs(data);
-      console.log(published);
-      console.log(drafts);
       commit("setBlogs", { resource: "drafts", blogs: drafts });
       commit("setBlogs", { resource: "published", blogs: published });
       return { published, drafts };

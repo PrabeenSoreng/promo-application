@@ -32,7 +32,10 @@
                   <h2>{{ dBlog.title }}</h2>
                   <div class="blog-card-footer">
                     <span>Last Edited {{ dBlog.updatedAt | formatDate }}</span>
-                    <!-- Dropdown with menu here -->
+                    <Dropdown
+                      :items="draftsOptions"
+                      @optionChanged="handleOption($event, dBlog._id)"
+                    />
                   </div>
                 </div>
               </div>
@@ -52,7 +55,10 @@
                   <h2>{{ pBlog.title }}</h2>
                   <div class="blog-card-footer">
                     <span>Last Edited {{ pBlog.updatedAt | formatDate }}</span>
-                    <!-- Dropdown with menu here -->
+                    <Dropdown
+                      :items="publishedOptions"
+                      @optionChanged="handleOption($event, pBlog._id)"
+                    />
                   </div>
                 </div>
               </div>
@@ -70,9 +76,15 @@
 <script>
 import { mapState } from "vuex";
 import InstructorHeader from "~/components/shared/Header";
+import Dropdown from "~/components/shared/Dropdown";
+import {
+  createPublishedOptions,
+  createDraftsOptions,
+  commands
+} from "~/pages/instructor/options";
 export default {
   layout: "instructor",
-  components: { InstructorHeader },
+  components: { InstructorHeader, Dropdown },
   data() {
     return {
       activeTab: 0
@@ -82,10 +94,25 @@ export default {
     ...mapState({
       published: ({ instructor }) => instructor.blog.blogs.published,
       drafts: ({ instructor }) => instructor.blog.blogs.drafts
-    })
+    }),
+    publishedOptions() {
+      return createPublishedOptions();
+    },
+    draftsOptions() {
+      return createDraftsOptions();
+    }
   },
   async fetch({ store }) {
     await store.dispatch("instructor/blog/fetchUserBlogs");
+  },
+  methods: {
+    handleOption(command, blogId) {
+      if (command === commands.EDIT_BLOG) {
+        this.$router.push(`/instructor/blog/${blogId}/edit`);
+      }
+      if (command === commands.DELETE_BLOG) {
+      }
+    }
   }
 };
 </script>
