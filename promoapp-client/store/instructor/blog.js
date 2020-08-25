@@ -56,6 +56,17 @@ export const actions = {
         commit("setIsSaving", false);
         return Promise.reject(error);
       });
+  },
+  deleteBlog({ commit, state }, blog) {
+    const resource = blog.status === "active" ? "drafts" : "published";
+    return this.$axios
+      .$delete(`/api/v1/blog/${blog._id}`)
+      .then(_ => {
+        const index = state.blogs[resource].findIndex(b => b._id === blog._id);
+        commit("deleteBlog", { resource, index });
+        return true;
+      })
+      .catch(error => Promise.reject(error));
   }
 };
 
@@ -65,6 +76,9 @@ export const mutations = {
   },
   setBlogs(state, { resource, blogs }) {
     state.blogs[resource] = blogs;
+  },
+  deleteBlog(state, { resource, index }) {
+    state.blogs[resource].splice(index, 1);
   },
   setIsSaving(state, isSaving) {
     state.isSaving = isSaving;
