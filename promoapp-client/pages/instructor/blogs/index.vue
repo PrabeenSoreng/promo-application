@@ -29,7 +29,7 @@
             <template v-if="activeTab === 0">
               <div v-if="drafts && drafts.length > 0">
                 <div v-for="dBlog in drafts" :key="dBlog._id" class="blog-card">
-                  <h2>{{ dBlog.title }}</h2>
+                  <h2>{{ displayBlogTitle(dBlog) }}</h2>
                   <div class="blog-card-footer">
                     <span>Last Edited {{ dBlog.updatedAt | formatDate }}</span>
                     <Dropdown
@@ -52,7 +52,7 @@
                   :key="pBlog._id"
                   class="blog-card"
                 >
-                  <h2>{{ pBlog.title }}</h2>
+                  <h2>{{ displayBlogTitle(pBlog) }}</h2>
                   <div class="blog-card-footer">
                     <span>Last Edited {{ pBlog.updatedAt | formatDate }}</span>
                     <Dropdown
@@ -117,14 +117,17 @@ export default {
     displayDeleteWarning(blog) {
       const isConfirm = confirm("Are you sure you want to delete blog ?");
       if (isConfirm) {
-        this.$store
-          .dispatch("instructor/blog/deleteBlog", blog)
-          .then(_ =>
-            this.$toasted.success("Blog was successfully deleted!", {
-              duration: 2000
-            })
-          );
+        this.$store.dispatch("instructor/blog/deleteBlog", blog).then(_ =>
+          this.$toasted.success("Blog was successfully deleted!", {
+            duration: 2000
+          })
+        );
       }
+    },
+    displayBlogTitle(blog) {
+      return (
+        blog.title || blog.subtitle || "Blog without Title and Subtitle :("
+      );
     }
   }
 };
