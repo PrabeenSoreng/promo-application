@@ -1,3 +1,5 @@
+import Vue from "vue";
+
 function separateBlogs(blogs) {
   const published = [];
   const drafts = [];
@@ -57,6 +59,16 @@ export const actions = {
         return Promise.reject(error);
       });
   },
+  updatePublishedBlog({ commit, state }, { id, data }) {
+    return this.$axios
+      .$patch(`/api/v1/blog/${id}`, data)
+      .then(blog => {
+        const index = state.blogs["published"].findIndex(b => b._id === id);
+        commit("setPublishedBlog", { index, blog: blog.data });
+        return blog;
+      })
+      .catch(error => Promise.reject(error));
+  },
   deleteBlog({ commit, state }, blog) {
     const resource = blog.status === "active" ? "drafts" : "published";
     return this.$axios
@@ -73,6 +85,9 @@ export const actions = {
 export const mutations = {
   setBlog(state, blog) {
     state.blog = blog;
+  },
+  setPublishedBlog(state, { index, blog }) {
+    Vue.set(state.blogs.published, index, blog);
   },
   setBlogs(state, { resource, blogs }) {
     state.blogs[resource] = blogs;
