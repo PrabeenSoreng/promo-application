@@ -1,5 +1,6 @@
 export const state = () => {
   return {
+    blog: {},
     blogs: {
       all: [] || null,
       featured: [] || null
@@ -16,11 +17,23 @@ export const actions = {
         return state.blogs.all;
       })
       .catch(error => Promise.reject(error));
+  },
+  fetchBlogBySlug({ commit, state }, slug) {
+    return this.$axios
+      .$get(`/api/v1/blog/s/${slug}`)
+      .then(({ data }) => {
+        commit("setBlog", data);
+        return state.blog;
+      })
+      .catch(error => Promise.reject(error));
   }
 };
 
 export const mutations = {
   setBlogs(state, { resource, blogs }) {
     state.blogs[resource] = blogs;
+  },
+  setBlog(state, blog) {
+    state.blog = blog;
   }
 };
