@@ -18,6 +18,16 @@ export const actions = {
       })
       .catch(error => Promise.reject(error));
   },
+  fetchFeaturedBlogs({ commit, state }, filter) {
+    const url = this.$applyParamsToUrl(`/api/v1/blog`, filter);
+    return this.$axios
+      .$get(url)
+      .then(({ data }) => {
+        commit("setBlogs", { resource: "featured", blogs: data });
+        return state.blogs.featured;
+      })
+      .catch(error => Promise.reject(error));
+  },
   fetchBlogBySlug({ commit, state }, slug) {
     return this.$axios
       .$get(`/api/v1/blog/s/${slug}`)

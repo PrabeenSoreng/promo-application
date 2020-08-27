@@ -8,7 +8,7 @@ const router = express.Router();
 // POST : /api/v1/blog
 router
   .route("")
-  .get(blogController.getBlgs)
+  .get(blogController.getBlogs)
   .post(
     authController.onlyAuthUser,
     authController.onlyAdmin,

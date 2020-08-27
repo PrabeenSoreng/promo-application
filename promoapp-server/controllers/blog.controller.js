@@ -21,7 +21,7 @@ function parseFilters(queries) {
   return parsedQueries;
 }
 
-exports.getBlgs = catchAsync(async (req, res, next) => {
+exports.getBlogs = catchAsync(async (req, res, next) => {
   const pageSize = parseInt(req.query.pageSize) || 0;
   const pageNum = parseInt(req.query.pageNum) || 1;
   const skips = pageSize * (pageNum - 1);
