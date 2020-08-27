@@ -22,7 +22,17 @@
             </div>
             <!-- end of blog -->
             <!-- pagination -->
-            <div class="section"></div>
+            <div class="section">
+              <client-only placeholder="Loading...">
+                <paginate
+                  :page-count="5"
+                  :click-handler="handleClick"
+                  :prev-text="'Prev'"
+                  :next-text="'Next'"
+                  :container-class="'paginationContainer'"
+                ></paginate>
+              </client-only>
+            </div>
             <!-- end of pagination -->
           </div>
           <!-- side bar -->
@@ -65,6 +75,9 @@ export default {
       publishedBlogs: state => state.blog.blogs.all,
       featuredBlogs: state => state.blog.blogs.featured
     })
+  },
+  methods: {
+    handleClick() {}
   }
 };
 </script>
