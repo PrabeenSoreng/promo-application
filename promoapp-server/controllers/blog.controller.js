@@ -34,7 +34,7 @@ exports.getBlogs = catchAsync(async (req, res, next) => {
     .limit(pageSize);
   if (!publishedBlogs) return next(new AppError("Blogs not found!!!", 404));
 
-  const count = await Blog.count();
+  const count = await Blog.count({ status: "published" });
 
   res.status(200).json({
     status: "success",
