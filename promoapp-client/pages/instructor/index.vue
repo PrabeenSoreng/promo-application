@@ -12,11 +12,12 @@
           <div>Blogs</div>
         </div>
         <!-- Go to /instructor/heroes -->
-        <div class="box" @click="() => {}">
+        <div class="box" @click="() => $router.push('/instructor/heroes')">
           <div>Heroes</div>
         </div>
       </div>
-    </div>-
+    </div>
+    -
   </div>
 </template>
 <script>
@@ -24,8 +25,8 @@ import InstructorHeader from "~/components/shared/Header";
 export default {
   layout: "instructor",
   components: {
-    InstructorHeader,
-  },
+    InstructorHeader
+  }
 };
 </script>
 <style scoped lang="scss">

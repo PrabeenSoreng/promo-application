@@ -1,6 +1,11 @@
 <template>
   <div>
-    <Hero />
+    <Hero
+      :title="courseHero.title"
+      :subtitle="courseHero.subtitle"
+      :image="courseHero.image"
+      :promoLink="courseHero.product.productLink"
+    />
     <section class="section">
       <div class="container">
         <h1 class="title">Featured Courses</h1>
@@ -46,10 +51,15 @@ export default {
   computed: {
     ...mapState({
       courses: state => state.course.items,
-      featuredBlogs: state => state.blog.blogs.featured
+      featuredBlogs: state => state.blog.blogs.featured,
+      courseHero: state => state.hero.item[1]
     })
   },
+  mounted() {
+    console.log(this.courseHero);
+  },
   async fetch({ store }) {
+    // await store.dispatch("hero/fetchHero");
     await store.dispatch("course/fetchCourses");
     await store.dispatch("blog/fetchFeaturedBlogs", {
       "filter[featured]": true
