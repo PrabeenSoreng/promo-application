@@ -4,7 +4,7 @@
       :title="courseHero.title"
       :subtitle="courseHero.subtitle"
       :image="courseHero.image"
-      :promoLink="courseHero.product.productLink"
+      :promoLink="courseHero.product && courseHero.product.productLink"
     />
     <section class="section">
       <div class="container">
@@ -52,12 +52,12 @@ export default {
     ...mapState({
       courses: state => state.course.items,
       featuredBlogs: state => state.blog.blogs.featured,
-      courseHero: state => state.hero.item[1]
+      courseHero: state => state.hero.item
     })
   },
-  mounted() {
-    console.log(this.courseHero);
-  },
+  // mounted() {
+  //   console.log(this.courseHero);
+  // },
   async fetch({ store }) {
     // await store.dispatch("hero/fetchHero");
     await store.dispatch("course/fetchCourses");

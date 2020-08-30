@@ -24,6 +24,7 @@ exports.getProductHero = catchAsync(async (req, res, next) => {
 });
 
 exports.updateProductHero = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
   const hero = await ProductHero.findById(id).populate("product");
   if (!hero) return next(new AppError("Data not available.", 404));
 

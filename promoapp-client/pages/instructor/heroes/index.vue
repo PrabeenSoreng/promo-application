@@ -2,6 +2,11 @@
   <div class="heroes-page">
     <div class="container">
       <h1 class="title">Course Heroes</h1>
+      <portal-target
+        v-for="hero in heroes"
+        :key="hero._id"
+        :name="`modal-view-${hero._id}`"
+      />
       <table class="heroes-table table is-responsive">
         <thead>
           <tr class="main-table-row">
@@ -12,58 +17,40 @@
           </tr>
         </thead>
         <tbody>
-          <tr @click="openModal('1')" class="table-row">
-            <td>Hero Image</td>
-            <td>Hero Title</td>
-            <td>Hero Subtitle</td>
-            <td>Active/ Inactive</td>
+          <tr
+            v-for="hero in heroes"
+            :key="hero._id"
+            @click="openModal(hero._id)"
+            :class="{ isActive: activeHero._id === hero._id }"
+            class="table-row"
+          >
+            <td>{{ hero.image || "Not set" }}</td>
+            <td>{{ hero.title || "Not set" }}</td>
+            <td>{{ hero.subtitle || "Not set" }}</td>
+            <td>{{ activeHero._id === hero._id ? "Active" : "Inactive" }}</td>
             <td class="modal-td" v-show="false">
-              <Modal
-                ref="modal-1"
-                :showButton="false"
-                actionTitle="Make Active"
-                openTitle="Favorite"
-                title="Make Course Hero"
-              >
-                <div>
-                  <div class="subtitle">
-                    Title: Some Title
+              <portal :to="`modal-view-${hero._id}`">
+                <Modal
+                  @submitted="activateHero($event, hero._id)"
+                  :ref="`modal-${hero._id}`"
+                  :showButton="false"
+                  actionTitle="Make Active"
+                  openTitle="Favorite"
+                  title="Make Course Hero"
+                >
+                  <div>
+                    <div class="subtitle">
+                      Title: {{ hero.title || "Not set" }}
+                    </div>
+                    <div class="subtitle">
+                      Subtitle: {{ hero.subtitle || "Not set" }}
+                    </div>
+                    <figure class="image is-3by1">
+                      <img :src="hero.image" />
+                    </figure>
                   </div>
-                  <div class="subtitle">
-                    Subtitle: Some Subtitle
-                  </div>
-                  <figure class="image is-3by1">
-                    <img />
-                  </figure>
-                </div>
-              </Modal>
-            </td>
-          </tr>
-          <tr @click="openModal('2')" class="table-row">
-            <td>Hero Image</td>
-            <td>Hero Title</td>
-            <td>Hero Subtitle</td>
-            <td>Active/ Inactive</td>
-            <td class="modal-td" v-show="false">
-              <Modal
-                ref="modal-2"
-                :showButton="false"
-                actionTitle="Make Active"
-                openTitle="Favorite"
-                title="Make Course Hero"
-              >
-                <div>
-                  <div class="subtitle">
-                    Title: Some Title 2
-                  </div>
-                  <div class="subtitle">
-                    Subtitle: Some Subtitle 2
-                  </div>
-                  <figure class="image is-3by1">
-                    <img />
-                  </figure>
-                </div>
-              </Modal>
+                </Modal>
+              </portal>
             </td>
           </tr>
         </tbody>
@@ -84,6 +71,9 @@ export default {
   computed: {
     heroes() {
       return this.$store.state.instructor.heroes;
+    },
+    activeHero() {
+      return this.$store.state.hero.item;
     }
   },
   // mounted() {
@@ -91,7 +81,16 @@ export default {
   // },
   methods: {
     openModal(modalId) {
-      this.$refs[`modal-${modalId}`].openModal();
+      const modal = this.$refs[`modal-${modalId}`][0];
+      modal.openModal();
+    },
+    activateHero({ closeModal }, heroId) {
+      this.$store.dispatch("instructor/activateHero", heroId).then(_ => {
+        this.$toasted.success("Hero was successfully activated!", {
+          duration: 2000
+        });
+        closeModal();
+      });
     }
   }
 };
@@ -106,8 +105,7 @@ export default {
   font-size: 45px;
   font-weight: bold;
 }
-.isActive {
-}
+
 .table-row {
   margin: 20px;
   &.isActive {

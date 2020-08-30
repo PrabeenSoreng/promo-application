@@ -1,6 +1,6 @@
 export const state = () => {
   return {
-    item: {} || null
+    item: null
   };
 };
 
@@ -18,7 +18,8 @@ export const actions = {
     return this.$axios
       .$get("/api/v1/product-hero")
       .then(({ data }) => {
-        commit("setHero", data);
+        console.log(data);
+        commit("setHero", data[0]);
         return state.item;
       })
       .catch(error => Promise.reject(error));

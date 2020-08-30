@@ -63,7 +63,8 @@ export default {
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     // "@nuxtjs/bulma",
     // Doc: https://axios.nuxtjs.org/usage
-    "@nuxtjs/axios"
+    "@nuxtjs/axios",
+    "portal-vue/nuxt"
   ],
   /*
    ** Axios module configuration
