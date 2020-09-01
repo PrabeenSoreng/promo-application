@@ -18,7 +18,6 @@ export const actions = {
     return this.$axios
       .$get("/api/v1/product-hero")
       .then(({ data }) => {
-        console.log(data);
         commit("setHero", data[0]);
         return state.item;
       })

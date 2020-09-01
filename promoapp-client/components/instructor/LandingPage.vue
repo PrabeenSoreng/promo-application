@@ -10,7 +10,7 @@
           <div class="control">
             <input
               :value="course.title"
-              @input="($event) => emitCourseValue($event, 'title')"
+              @input="$event => emitCourseValue($event, 'title')"
               class="input is-medium"
               type="text"
               placeholder="Dart and Flutter From Zero to Hero "
@@ -22,7 +22,7 @@
           <div class="control">
             <input
               :value="course.subtitle"
-              @input="($event) => emitCourseValue($event, 'subtitle')"
+              @input="$event => emitCourseValue($event, 'subtitle')"
               class="input is-medium"
               type="text"
               placeholder="Build real mobile Application for Android and iOS."
@@ -32,13 +32,19 @@
         <div class="field">
           <label class="label">Course description</label>
           <div class="control">
-            <textarea
+            <!-- <textarea
               :value="course.description"
               @input="($event) => emitCourseValue($event, 'description')"
               class="textarea is-medium"
               type="text"
               placeholder="Write something catchy about the course"
-            ></textarea>
+            ></textarea> -->
+            <CourseEditor
+              @editorUpdated="
+                content => emitCourseValue(content, 'description')
+              "
+              :initialContent="course.description"
+            />
           </div>
         </div>
         <div class="field">
@@ -46,13 +52,14 @@
           <div class="select is-medium">
             <select
               :value="course.category._id"
-              @change="($event) => emitCourseValue($event, 'category')"
+              @change="$event => emitCourseValue($event, 'category')"
             >
               <option
                 v-for="category in categories"
                 :key="category._id"
                 :value="category._id"
-              >{{category.name}}</option>
+                >{{ category.name }}</option
+              >
             </select>
           </div>
         </div>
@@ -68,7 +75,7 @@
               <div class="control">
                 <input
                   :value="course.image"
-                  @input="($event) => emitCourseValue($event, 'image')"
+                  @input="$event => emitCourseValue($event, 'image')"
                   class="input is-medium"
                   type="text"
                   placeholder="https://images.unsplash.com/photo-1498837167922-ddd27525d352"
@@ -82,7 +89,7 @@
           <div class="control">
             <input
               :value="course.productLink"
-              @input="($event) => emitCourseValue($event, 'productLink')"
+              @input="$event => emitCourseValue($event, 'productLink')"
               class="input is-medium"
               type="text"
               placeholder="https://www.udemy.com/vue-js-2-the-full-guide-by-real-apps-vuex-router-node"
@@ -94,7 +101,7 @@
           <div class="control">
             <input
               :value="course.promoVideoLink"
-              @input="($event) => emitCourseValue($event, 'promoVideoLink')"
+              @input="$event => emitCourseValue($event, 'promoVideoLink')"
               class="input is-medium"
               type="text"
               placeholder="https://www.youtube.com/watch?v=WQ9sCAhRh1M"
@@ -107,12 +114,16 @@
 </template>
 
 <script>
+import CourseEditor from "~/components/editor/CourseEditor";
 export default {
+  components: {
+    CourseEditor
+  },
   props: {
     course: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {};
@@ -120,20 +131,21 @@ export default {
   computed: {
     categories() {
       return this.$store.state.category.items;
-    },
+    }
   },
   methods: {
     emitCourseValue(e, field) {
-      if (field === "category") return this.emitCategory(e.target.value, field);
-      return this.$emit("courseValueUpdated", { value: e.target.value, field });
+      const value = e.target ? e.target.value : e;
+      if (field === "category") return this.emitCategory(value, field);
+      return this.$emit("courseValueUpdated", { value, field });
     },
     emitCategory(categoryId, field) {
-      const foundCategory = this.categories.find((c) => c._id === categoryId);
+      const foundCategory = this.categories.find(c => c._id === categoryId);
       this.$emit("courseValueUpdated", {
         value: foundCategory,
-        field,
+        field
       });
-    },
-  },
+    }
+  }
 };
 </script>
