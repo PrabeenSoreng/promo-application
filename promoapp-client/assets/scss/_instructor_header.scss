@@ -52,6 +52,9 @@
 
     &-title {
       font-size: 35px;
+      @media screen and (max-width: 650px) {
+        font-size: 14px;
+      }
     }
   }
 
@@ -68,6 +71,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    @media screen and (max-width: 700px) {
+      display: none;
+    }
   }
 
   &-button {

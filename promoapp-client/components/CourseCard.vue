@@ -15,17 +15,21 @@
         </div>
       </div>
       <div class="content">
-        {{ course.subtitle | shortenText(45)}}
+        {{ course.subtitle | shortenText(45) }}
         <br />
       </div>
       <div class="price-box">
-        <span class="price">{{course.price}}$</span>
-        <span class="disc-price">{{course.discountedPrice}}$</span>
+        <span class="price">{{ course.price }}$</span>
+        <span class="disc-price">{{ course.discountedPrice }}$</span>
       </div>
     </div>
     <footer class="card-footer">
-      <nuxt-link :to="''" class="card-footer-item">Learn More</nuxt-link>
-      <a target="_" :href="course.productLink" class="card-footer-item">Enroll</a>
+      <nuxt-link :to="`/courses/${course.slug}`" class="card-footer-item"
+        >Learn More</nuxt-link
+      >
+      <a target="_" :href="course.productLink" class="card-footer-item"
+        >Enroll</a
+      >
     </footer>
   </div>
 </template>
@@ -35,9 +39,9 @@ export default {
   props: {
     course: {
       type: Object,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

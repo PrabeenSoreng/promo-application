@@ -44,6 +44,8 @@ export default {
     { src: `~/plugins/filters` },
     { src: `~/plugins/vuelidate` },
     { src: `~/plugins/integrations` },
+    { src: `~/plugins/components` },
+    { src: `~/plugins/tooltip` },
     { src: `~/plugins/paginate`, ssr: false },
     { src: `~/plugins/toasted`, ssr: false }
   ],

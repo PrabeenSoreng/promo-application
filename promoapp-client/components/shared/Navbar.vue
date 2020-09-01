@@ -7,7 +7,8 @@
       <!-- Adds click to open -->
       <!-- Adds active class -->
       <a
-        @click="() => {}"
+        @click="isActive = !isActive"
+        :class="{ 'is-active': isActive }"
         role="button"
         class="navbar-burger burger"
         aria-label="menu"
@@ -21,13 +22,17 @@
     </div>
 
     <!-- Adds active class -->
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div
+      id="navbarBasicExample"
+      :class="{ 'is-active': isActive }"
+      class="navbar-menu"
+    >
       <div class="navbar-start">
-        <nuxt-link to="/" class="navbar-item">Home</nuxt-link>
-        <nuxt-link to="#" class="navbar-item">Courses</nuxt-link>
-        <nuxt-link to="/blogs" class="navbar-item">Blogs</nuxt-link>
-        <nuxt-link to="#" class="navbar-item">About</nuxt-link>
-        <nuxt-link to="#" class="navbar-item">Cv</nuxt-link>
+        <nav-link to="/" class="navbar-item">Home</nav-link>
+        <nav-link to="/courses" class="navbar-item">Courses</nav-link>
+        <nav-link to="/blogs" class="navbar-item">Blogs</nav-link>
+        <nav-link to="/about" class="navbar-item">About</nav-link>
+        <nav-link to="/cv" class="navbar-item">Cv</nav-link>
         <!-- <nuxt-link to="/instructor" class="navbar-item">Instructor</nuxt-link>
         <nuxt-link to="/secret" class="navbar-item">Secret</nuxt-link>-->
       </div>
@@ -49,12 +54,18 @@
                 v-if="isAdmin"
                 class="button is-link is-outlined"
                 @click="() => $router.push('/instructor')"
-              >Instructor</button>
+              >
+                Instructor
+              </button>
               <a class="button is-primary" @click="logout">Logout</a>
             </template>
             <template v-else>
-              <nuxt-link to="/auth/register" class="button is-primary">Sign up</nuxt-link>
-              <nuxt-link to="/auth/login" class="button is-light">Log in</nuxt-link>
+              <nuxt-link to="/auth/register" class="button is-primary"
+                >Sign up</nuxt-link
+              >
+              <nuxt-link to="/auth/login" class="button is-light"
+                >Log in</nuxt-link
+              >
             </template>
           </div>
         </div>
@@ -66,20 +77,25 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      isActive: false
+    };
+  },
   computed: {
     ...mapGetters({
       user: "auth/authUser",
       isAuth: "auth/isAuthenticated",
-      isAdmin: "auth/isAdmin",
-    }),
+      isAdmin: "auth/isAdmin"
+    })
   },
   methods: {
     logout() {
       this.$store
         .dispatch("auth/logout")
         .then(() => this.$router.push("/auth/login"));
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -90,6 +106,9 @@ export default {
 }
 .navbar-brand {
   padding-right: 30px;
+  @media screen and (max-width: 1023px) {
+    padding-right: 0px;
+  }
 }
 .avatar {
   margin-right: 5px;

@@ -15,7 +15,17 @@
             :key="course._id"
             class="column is-one-quarter"
           >
-            <CourseCard :course="course" />
+            <v-popover offset="16" trigger="hover" placement="right-start">
+              <CourseCard :course="course" />
+              <template slot="popover">
+                <CourseCardTooltip
+                  :title="course.title"
+                  :subtitle="course.category.name"
+                  :description="course.subtitle"
+                  :wsl="course.wsl"
+                />
+              </template>
+            </v-popover>
           </div>
         </div>
       </div>
@@ -40,6 +50,7 @@
 <script>
 import Hero from "~/components/shared/Hero";
 import CourseCard from "~/components/CourseCard";
+import CourseCardTooltip from "~/components/CourseCardTooltip";
 import BlogCard from "~/components/BlogCard";
 import { mapState } from "vuex";
 export default {
