@@ -14,7 +14,7 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: process.env.npm_package_name || "",
+    title: "Promo Courses | Prabeen",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -22,6 +22,43 @@ export default {
         hid: "description",
         name: "description",
         content: process.env.npm_package_description || ""
+      },
+      {
+        hid: "og:title",
+        name: "og:title",
+        content: "Learn from amazing courses."
+      },
+      {
+        hid: "og:image",
+        name: "og:image",
+        content:
+          "https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"
+      },
+      {
+        hid: "og:locale",
+        name: "og:locale",
+        content: "en-IN"
+      },
+      {
+        hid: "og:url",
+        name: "og:url",
+        content: process.env.BASE_URL || "http://localhost:3000"
+      },
+      {
+        hid: "og:type",
+        name: "og:type",
+        content: "website"
+      },
+      {
+        hid: "og:locale",
+        name: "og:locale",
+        content: "en-IN"
+      },
+      {
+        hid: "og:description",
+        name: "og:description",
+        content:
+          "You will find amazing courses you can learn from. My name is Prabeen Kumar Soreng and I'm a software developer."
       }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],

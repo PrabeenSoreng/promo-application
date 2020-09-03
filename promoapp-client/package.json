@@ -1,6 +1,7 @@
 {
-  "name": "promoapp-client",
+  "name": "promo-app-prabeen",
   "version": "1.0.0",
+  "description": "My name is Prabeen Kumar Soreng and I am a software developer and freelance developer. I have acquired advanced technical knowledge and the ability to explain programming topics clearly and in detail to a broad audience.",
   "private": true,
   "scripts": {
     "dev": "nuxt",
