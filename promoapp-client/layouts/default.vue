@@ -2,15 +2,18 @@
   <div>
     <NavigationBar />
     <Nuxt />
+    <AppFooter />
   </div>
 </template>
 
 <script>
 import NavigationBar from "~/components/shared/Navbar";
+import AppFooter from "~/components/shared/Footer";
 export default {
   components: {
     NavigationBar,
-  },
+    AppFooter
+  }
 };
 </script>
 
